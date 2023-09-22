@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add styles to the button */
+        #createPostButton {
+            background-color: #0074d9;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #createPostButton:hover {
+            background-color: #0056b3;
+        }
+
+        /* Add styles for the temporary message */
+        #popupInstruction {
+            display: none;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <title>Create a Post</title>
+</head>
+<body>
+    <header>
+        <h1>GithubForum</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recent.html">Recent Posts</a></li>
+                <li><a href="categories.html">Categories</a></li>
+                <li><a href="posting.html">Post a new topic</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="post-form">
+            <h2>Write your post:</h2>
+            <div id="popupInstruction">
+                <p>After opening the popup, please click on 'Submit new issue' to create a new post.</p>
+            </div>
+            <!-- Category Selector -->
+            <div class="category-row">
+                <span class="category selected" onclick="selectCategory(this, 'General')">General</span>
+                <span class="category" onclick="selectCategory(this, 'Linux')">Linux</span>
+                <span class="category" onclick="selectCategory(this, 'Programming')">Programming</span>
+                <!-- Add more categories here -->
+            </div>
+            <!-- Emoji Row -->
+            <div class="emoji-row">
+                <span class="emoji" onclick="insertEmoji('😀')">😀</span>
+                <span class="emoji" onclick="insertEmoji('😀')">😀</span>
+                <span class="emoji" onclick="insertEmoji('😃')">😃</span>
+                <span class="emoji" onclick="insertEmoji('😄')">😄</span>
+                <span class="emoji" onclick="insertEmoji('😁')">😁</span>
+                <span class="emoji" onclick="insertEmoji('😆')">😆</span>
+                <span class="emoji" onclick="insertEmoji('😅')">😅</span>
+                <span class="emoji" onclick="insertEmoji('🤣')">🤣</span>
+                <span class="emoji" onclick="insertEmoji('😂')">😂</span>
+                <span class="emoji" onclick="insertEmoji('😊')">😊</span>
+                <span class="emoji" onclick="insertEmoji('😇')">😇</span>
+                <span class="emoji" onclick="insertEmoji('😍')">😍</span>
+                <span class="emoji" onclick="insertEmoji('🥰')">🥰</span>
+                <span class="emoji" onclick="insertEmoji('😘')">😘</span>
+                <span class="emoji" onclick="insertEmoji('😋')">😋</span>
+                <span class="emoji" onclick="insertEmoji('😎')">😎</span>
+                <span class="emoji" onclick="insertEmoji('😛')">😛</span>
+                <span class="emoji" onclick="insertEmoji('🤪')">🤪</span>
+                <span class="emoji" onclick="insertEmoji('😜')">😜</span>
+                <span class="emoji" onclick="insertEmoji('😝')">😝</span>
+                <span class="emoji" onclick="insertEmoji('🤑')">🤑</span>
+                <span class="emoji" onclick="insertEmoji('🤗')">🤗</span>
+                <span class="emoji" onclick="insertEmoji('🤩')">🤩</span>
+                <span class="emoji" onclick="insertEmoji('🥳')">🥳</span>
+                <span class="emoji" onclick="insertEmoji('🤔')">🤔</span>
+                <span class="emoji" onclick="insertEmoji('🤨')">🤨</span>
+                <span class="emoji" onclick="insertEmoji('😐')">😐</span>
+                <span class="emoji" onclick="insertEmoji('😑')">😑</span>
+                <span class="emoji" onclick="insertEmoji('🚀')">🚀</span>
+            </div>
+            <!-- Add an id to the form and the textarea -->
+            <form id="post-form" action="#" method="post">
+                <!-- Title Field -->
+                <input type="text" name="post-title" id="post-title" placeholder="Title" required style="width: 100%;">
+                <textarea name="post-content" id="post-content" rows="8" placeholder="Write your post here..." required></textarea>
+                <!-- Add an id to the button -->
+                <button id="createPostButton" type="button">Create New Post</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Your Forum</p>
+    </footer>
+
+    <!-- JavaScript functions -->
+    <script>
+        function insertEmoji(emoji) {
+            const postContent = document.getElementById('post-content');
+            const currentCursorPosition = postContent.selectionStart;
+            const textBeforeCursor = postContent.value.substring(0, currentCursorPosition);
+            const textAfterCursor = postContent.value.substring(currentCursorPosition);
+            postContent.value = textBeforeCursor + emoji + textAfterCursor;
+        }
+
+        function selectCategory(element, category) {
+            // Remove the "selected" class from all categories
+            const categories = document.querySelectorAll('.category');
+            categories.forEach((item) => {
+                item.classList.remove('selected');
+            });
+
+            // Add the "selected" class to the clicked category
+            element.classList.add('selected');
+        }
+
+        // Select the default category on page load
+        window.addEventListener('load', () => {
+            const defaultCategory = document.querySelector('.category.selected');
+            selectCategory(defaultCategory, defaultCategory.innerText);
+        });
+
+        function openGitHubIssues() {
+            const selectedCategory = document.querySelector('.category.selected').textContent;
+            const postContent = document.getElementById('post-content').value;
+            const postTitle = document.getElementById('post-title').value;
+            const title = encodeURIComponent(`${postTitle}`);
+            const body = encodeURIComponent(`${postContent}`);
+            const url = `https://github.com/nimafanniasl/GithubForum/issues/new?title=${title}&body=${body}&labels=${selectedCategory}`;
+
+            // Show the instruction message
+            const popupInstruction = document.getElementById('popupInstruction');
+            popupInstruction.style.display = 'block';
+
+            // Open the popup
+            const popupWindow = window.open(url, "_blank", "width=600,height=400");
+
+            // Check if the popup is closed and hide the instruction
+            const checkPopupClosed = setInterval(() => {
+                if (popupWindow.closed) {
+                    popupInstruction.style.display = 'none';
+                    clearInterval(checkPopupClosed);
+                }
+            }, 1000); // Check every 1 second
+        }
+
+        // Attach the click event listener to the button
+        document.getElementById("createPostButton").addEventListener("click", openGitHubIssues);
+
+    </script>
+</body>
+</html>
