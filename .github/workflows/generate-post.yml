@@ -32,4 +32,4 @@ jobs:
           git commit -m "Generate HTML for issue #${{ github.event.issue.number }}"
           git push --set-upstream origin ${{ github.ref }}
         env:
-          GH_PAT: ${{ secrets.TOKENACTIONS }}
+          token: ${{ secrets.TOKENACTIONS }}
