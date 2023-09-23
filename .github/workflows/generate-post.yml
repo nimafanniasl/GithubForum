@@ -30,6 +30,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "Generate HTML for issue #${{ github.event.issue.number }}"
-          git push --set-upstream origin ${{ github.ref }}
-        env:
-          TOKENACTIONS: ${{ secrets.TOKENACTIONS }}
+          git push
