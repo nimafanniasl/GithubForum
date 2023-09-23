@@ -5,34 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="styles.css">
-
-    <style>
-        /* Add styles to the button */
-        #createPostButton {
-            background-color: #0074d9;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-        }
-
-        #createPostButton:hover {
-            background-color: #0056b3;
-        }
-
-        /* Add styles for the temporary message */
-        #popupInstruction {
-            display: none;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-    </style>
     <title>Create a Post</title>
 </head>
 <body>
-    <header>
+    <header id="header">
         <h1>GithubForum</h1>
         <nav>
             <ul>
@@ -51,9 +27,9 @@
             </div>
             <!-- Category Selector -->
             <div class="category-row">
-                <span class="category selected" onclick="selectCategory(this, 'General')">General</span>
-                <span class="category" onclick="selectCategory(this, 'Linux')">Linux</span>
-                <span class="category" onclick="selectCategory(this, 'Programming')">Programming</span>
+                <!-- <span class="category selected" onclick="selectCategory(this, 'General')">General</span> -->
+                <!-- <span class="category" onclick="selectCategory(this, 'Linux')">Linux</span> -->
+                <!-- <span class="category" onclick="selectCategory(this, 'Programming')">Programming</span> -->
                 <!-- Add more categories here -->
             </div>
             <!-- Emoji Row -->
@@ -98,8 +74,8 @@
             </form>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2023 Your Forum</p>
+    <footer id="footer">
+        <p>&copy; 2023 GithubForum</p>
     </footer>
 
     <!-- JavaScript functions -->
@@ -138,6 +114,7 @@
         const categories = document.querySelectorAll('.category');
         categories.forEach((item) => {
             item.classList.remove('selected');
+            item.style.backgroundColor = ''; // Reset background color
         });
 
         // Add the "selected" class to the clicked category
@@ -199,14 +176,62 @@
 
             if (selectedLabel) {
                 const labelColor = `#${selectedLabel.color}`;
-                // Update the label text color
                 const selectedCategoryElement = document.querySelector('.category.selected');
-                selectedCategoryElement.style.color = labelColor;
+                selectedCategoryElement.style.backgroundColor = labelColor;
+
+                // Add the "grow-color" class to create the effect
+                document.getElementById('createPostButton').classList.add('grow-color');
+                document.getElementById('createPostButton').style.backgroundColor = labelColor;
+                // document.getElementById('header').classList.add('grow-color');
+                // document.getElementById('header').style.backgroundColor = labelColor;
+                // document.getElementById('footer').classList.add('grow-color');
+                // document.getElementById('footer').style.backgroundColor = labelColor;
+            } else {
+                // Remove the "grow-color" class when no category is selected
+                document.getElementById('createPostButton').classList.remove('grow-color');
+                document.getElementById('createPostButton').style.backgroundColor = '#0074d9'; // Reset to default color
             }
         } catch (error) {
             console.error('Error fetching label colors:', error);
         }
     }
+
+    // Function to fetch and populate labels from GitHub API
+    async function fetchAndPopulateLabels() {
+        const owner = 'nimafanniasl'; // Replace with the owner of your GitHub repository
+        const repo = 'GithubForum'; // Replace with the name of your GitHub repository
+
+        try {
+            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/labels`);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch labels from GitHub API');
+            }
+
+            const labels = await response.json();
+
+            // Update the category row with the fetched labels
+            const categoryRow = document.querySelector('.category-row');
+            categoryRow.innerHTML = ''; // Clear existing categories
+
+            labels.forEach((label) => {
+                const labelName = label.name;
+                const labelElement = document.createElement('span');
+                labelElement.className = 'category';
+                labelElement.textContent = labelName;
+                labelElement.onclick = function() {
+                    selectCategory(this, labelName);
+                };
+                categoryRow.appendChild(labelElement);
+            });
+        } catch (error) {
+            console.error('Error fetching labels:', error);
+        }
+    }
+
+    // Call the fetchAndPopulateLabels function on page load to populate labels
+    window.addEventListener('load', fetchAndPopulateLabels);
+
 </script>
 
 </body>

@@ -184,7 +184,6 @@ footer {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-    resize: vertical; /* Allow vertical resizing of textarea */
 }
 
 /* Style the send button */
@@ -214,7 +213,7 @@ button[type="submit"]:hover {
 .emoji {
     font-size: 24px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.3s ease-in-out;
 }
 
 .emoji:hover {
@@ -234,16 +233,20 @@ button[type="submit"]:hover {
     font-size: 18px;
     padding: 5px 10px;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s, transform 0.2s, border-radius 0.5s; /* Added transition for border-radius */
+    border-radius: 20px; /* More rounded edges */
+    transition: background-color 0.2s, color 0.2s, transform 0.2s; /* Added transition for border-radius */
 }
 
 /* Style the selected category */
 .category.selected {
-    background-color: #ccc; /* Lighter gray background for selected category */
-    color: #000; /* Black text color for selected category */
+    /* background-color: #ccc; */ /* Lighter gray background for selected category */
+    color: #FFF; /* Black text color for selected category */
     border-radius: 20px; /* More rounded edges */
 }
 
+#createPostButton {
+    border-radius: 20px;
+}
 
 .category:hover {
     transform: scale(1.1);
@@ -252,6 +255,11 @@ button[type="submit"]:hover {
 /* Add some spacing between the category row and other elements */
 .emoji-row {
     margin-top: 10px;
+}
+.emoji {
+    padding-right: 5px;
+    padding-left: 5px;
+    border-radius: 20px;
 }
 
 footer {
@@ -263,4 +271,31 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px 0;
+}
+
+/* CSS for the growing color effect */
+.grow-color {
+    transition: background-color 0.3s ease-in-out; /* Adjust the duration and easing as needed */
+}
+
+/* Add styles to the button */
+#createPostButton {
+    background-color: #0074d9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+#createPostButton:hover {
+    background-color: #0056b3;
+}
+
+/* Add styles for the temporary message */
+#popupInstruction {
+    display: none;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
 }
