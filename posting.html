@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style/styles.css">
     <title>Create a Post</title>
 </head>
 <body>
@@ -27,10 +27,7 @@
             </div>
             <!-- Category Selector -->
             <div class="category-row">
-                <!-- <span class="category selected" onclick="selectCategory(this, 'General')">General</span> -->
-                <!-- <span class="category" onclick="selectCategory(this, 'Linux')">Linux</span> -->
-                <!-- <span class="category" onclick="selectCategory(this, 'Programming')">Programming</span> -->
-                <!-- Add more categories here -->
+                <p>Loading categories...</p>
             </div>
             <!-- Emoji Row -->
             <div class="emoji-row">
@@ -77,162 +74,160 @@
     <footer id="footer">
         <p>&copy; 2023 GithubForum</p>
     </footer>
-
     <!-- JavaScript functions -->
-<!-- JavaScript functions -->
-<script>
-    // Define a variable to keep track of the last active text field
-    let lastActiveTextField = null;
+    <script>
+        // Define a variable to keep track of the last active text field
+        let lastActiveTextField = null;
 
-    // Function to set the last active text field
-    function setLastActiveTextField(textField) {
-        lastActiveTextField = textField;
-    }
-
-    function insertEmoji(emoji) {
-        if (lastActiveTextField) {
-            const currentCursorPosition = lastActiveTextField.selectionStart;
-            const textBeforeCursor = lastActiveTextField.value.substring(0, currentCursorPosition);
-            const textAfterCursor = lastActiveTextField.value.substring(currentCursorPosition);
-            lastActiveTextField.value = textBeforeCursor + emoji + textAfterCursor;
-            lastActiveTextField.focus();
+        // Function to set the last active text field
+        function setLastActiveTextField(textField) {
+            lastActiveTextField = textField;
         }
-    }
 
-    // Select all input fields on the page
-    const inputFields = document.querySelectorAll("input, textarea");
-
-    // Attach the focus event listener to all input fields
-    inputFields.forEach(function(inputField) {
-        inputField.addEventListener("focus", function() {
-            setLastActiveTextField(this);
-        });
-    });
-
-    function selectCategory(element, category) {
-        // Remove the "selected" class from all categories
-        const categories = document.querySelectorAll('.category');
-        categories.forEach((item) => {
-            item.classList.remove('selected');
-            item.style.backgroundColor = ''; // Reset background color
-        });
-
-        // Add the "selected" class to the clicked category
-        element.classList.add('selected');
-
-        // Get the label color based on the selected category
-        fetchLabelColors(category);
-    }
-
-    // Select the default category on page load
-    window.addEventListener('load', () => {
-        const defaultCategory = document.querySelector('.category.selected');
-        selectCategory(defaultCategory, defaultCategory.innerText);
-    });
-
-    function openGitHubIssues() {
-        const selectedCategory = document.querySelector('.category.selected').textContent;
-        const postContent = document.getElementById('post-content').value;
-        const postTitle = document.getElementById('post-title').value;
-        const title = encodeURIComponent(`${postTitle}`);
-        const body = encodeURIComponent(`${postContent}`);
-        const url = `https://github.com/nimafanniasl/GithubForum/issues/new?title=${title}&body=${body}&labels=${selectedCategory}`;
-
-        // Show the instruction message
-        const popupInstruction = document.getElementById('popupInstruction');
-        popupInstruction.style.display = 'block';
-
-        // Open the popup
-        const popupWindow = window.open(url, "_blank", "width=600,height=400");
-
-        // Check if the popup is closed and hide the instruction
-        const checkPopupClosed = setInterval(() => {
-            if (popupWindow.closed) {
-                popupInstruction.style.display = 'none';
-                clearInterval(checkPopupClosed);
+        function insertEmoji(emoji) {
+            if (lastActiveTextField) {
+                const currentCursorPosition = lastActiveTextField.selectionStart;
+                const textBeforeCursor = lastActiveTextField.value.substring(0, currentCursorPosition);
+                const textAfterCursor = lastActiveTextField.value.substring(currentCursorPosition);
+                lastActiveTextField.value = textBeforeCursor + emoji + textAfterCursor;
+                lastActiveTextField.focus();
             }
-        }, 1000); // Check every 1 second
-    }
-
-    // Attach the click event listener to the button
-    document.getElementById("createPostButton").addEventListener("click", openGitHubIssues);
-
-    // Function to fetch label colors from GitHub API without authentication
-    async function fetchLabelColors(category) {
-        const owner = 'nimafanniasl'; // Replace with the owner of your GitHub repository
-        const repo = 'GithubForum'; // Replace with the name of your GitHub repository
-
-        try {
-            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/labels`);
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch labels from GitHub API');
-            }
-
-            const labels = await response.json();
-
-            // Find the label with the selected category name
-            const selectedLabel = labels.find((label) => label.name === category);
-
-            if (selectedLabel) {
-                const labelColor = `#${selectedLabel.color}`;
-                const selectedCategoryElement = document.querySelector('.category.selected');
-                selectedCategoryElement.style.backgroundColor = labelColor;
-
-                // Add the "grow-color" class to create the effect
-                document.getElementById('createPostButton').classList.add('grow-color');
-                document.getElementById('createPostButton').style.backgroundColor = labelColor;
-                // document.getElementById('header').classList.add('grow-color');
-                // document.getElementById('header').style.backgroundColor = labelColor;
-                // document.getElementById('footer').classList.add('grow-color');
-                // document.getElementById('footer').style.backgroundColor = labelColor;
-            } else {
-                // Remove the "grow-color" class when no category is selected
-                document.getElementById('createPostButton').classList.remove('grow-color');
-                document.getElementById('createPostButton').style.backgroundColor = '#0074d9'; // Reset to default color
-            }
-        } catch (error) {
-            console.error('Error fetching label colors:', error);
         }
-    }
 
-    // Function to fetch and populate labels from GitHub API
-    async function fetchAndPopulateLabels() {
-        const owner = 'nimafanniasl'; // Replace with the owner of your GitHub repository
-        const repo = 'GithubForum'; // Replace with the name of your GitHub repository
+        // Select all input fields on the page
+        const inputFields = document.querySelectorAll("input, textarea");
 
-        try {
-            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/labels`);
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch labels from GitHub API');
-            }
-
-            const labels = await response.json();
-
-            // Update the category row with the fetched labels
-            const categoryRow = document.querySelector('.category-row');
-            categoryRow.innerHTML = ''; // Clear existing categories
-
-            labels.forEach((label) => {
-                const labelName = label.name;
-                const labelElement = document.createElement('span');
-                labelElement.className = 'category';
-                labelElement.textContent = labelName;
-                labelElement.onclick = function() {
-                    selectCategory(this, labelName);
-                };
-                categoryRow.appendChild(labelElement);
+        // Attach the focus event listener to all input fields
+        inputFields.forEach(function(inputField) {
+            inputField.addEventListener("focus", function() {
+                setLastActiveTextField(this);
             });
-        } catch (error) {
-            console.error('Error fetching labels:', error);
+        });
+
+        function selectCategory(element, category) {
+            // Remove the "selected" class from all categories
+            const categories = document.querySelectorAll('.category');
+            categories.forEach((item) => {
+                item.classList.remove('selected');
+                item.style.backgroundColor = ''; // Reset background color
+            });
+
+            // Add the "selected" class to the clicked category
+            element.classList.add('selected');
+
+            // Get the label color based on the selected category
+            fetchLabelColors(category);
         }
-    }
 
-    // Call the fetchAndPopulateLabels function on page load to populate labels
-    window.addEventListener('load', fetchAndPopulateLabels);
+        // Select the default category on page load
+        window.addEventListener('load', () => {
+            const defaultCategory = document.querySelector('.category.selected');
+            selectCategory(defaultCategory, defaultCategory.innerText);
+        });
 
-</script>
+        function openGitHubIssues() {
+            const selectedCategory = document.querySelector('.category.selected').textContent;
+            const postContent = document.getElementById('post-content').value;
+            const postTitle = document.getElementById('post-title').value;
+            const title = encodeURIComponent(`${postTitle}`);
+            const body = encodeURIComponent(`${postContent}`);
+            const url = `https://github.com/nimafanniasl/GithubForum/issues/new?title=${title}&body=${body}&labels=${selectedCategory}`;
+
+            // Show the instruction message
+            const popupInstruction = document.getElementById('popupInstruction');
+            popupInstruction.style.display = 'block';
+
+            // Open the popup
+            const popupWindow = window.open(url, "_blank", "width=600,height=400");
+
+            // Check if the popup is closed and hide the instruction
+            const checkPopupClosed = setInterval(() => {
+                if (popupWindow.closed) {
+                    popupInstruction.style.display = 'none';
+                    clearInterval(checkPopupClosed);
+                }
+            }, 1000); // Check every 1 second
+        }
+
+        // Attach the click event listener to the button
+        document.getElementById("createPostButton").addEventListener("click", openGitHubIssues);
+
+        // Function to fetch label colors from GitHub API without authentication
+        async function fetchLabelColors(category) {
+            const owner = 'nimafanniasl'; // Replace with the owner of your GitHub repository
+            const repo = 'GithubForum'; // Replace with the name of your GitHub repository
+
+            try {
+                const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/labels`);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch labels from GitHub API');
+                }
+
+                const labels = await response.json();
+
+                // Find the label with the selected category name
+                const selectedLabel = labels.find((label) => label.name === category);
+
+                if (selectedLabel) {
+                    const labelColor = `#${selectedLabel.color}`;
+                    const selectedCategoryElement = document.querySelector('.category.selected');
+                    selectedCategoryElement.style.backgroundColor = labelColor;
+
+                    // Add the "grow-color" class to create the effect
+                    document.getElementById('createPostButton').classList.add('grow-color');
+                    document.getElementById('createPostButton').style.backgroundColor = labelColor;
+                    // document.getElementById('header').classList.add('grow-color');
+                    // document.getElementById('header').style.backgroundColor = labelColor;
+                    // document.getElementById('footer').classList.add('grow-color');
+                    // document.getElementById('footer').style.backgroundColor = labelColor;
+                } else {
+                    // Remove the "grow-color" class when no category is selected
+                    document.getElementById('createPostButton').classList.remove('grow-color');
+                    document.getElementById('createPostButton').style.backgroundColor = '#0074d9'; // Reset to default color
+                }
+            } catch (error) {
+                console.error('Error fetching label colors:', error);
+            }
+        }
+
+        // Function to fetch and populate labels from GitHub API
+        async function fetchAndPopulateLabels() {
+            const owner = 'nimafanniasl'; // Replace with the owner of your GitHub repository
+            const repo = 'GithubForum'; // Replace with the name of your GitHub repository
+
+            try {
+                const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/labels`);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch labels from GitHub API');
+                }
+
+                const labels = await response.json();
+
+                // Update the category row with the fetched labels
+                const categoryRow = document.querySelector('.category-row');
+                categoryRow.innerHTML = '';
+
+                labels.forEach((label) => {
+                    const labelName = label.name;
+                    const labelElement = document.createElement('span');
+                    labelElement.className = 'category';
+                    labelElement.textContent = labelName;
+                    labelElement.onclick = function() {
+                        selectCategory(this, labelName);
+                    };
+                    categoryRow.appendChild(labelElement);
+                });
+            } catch (error) {
+                console.error('Error fetching labels:', error);
+            }
+        }
+
+        // Call the fetchAndPopulateLabels function on page load to populate labels
+        window.addEventListener('load', fetchAndPopulateLabels);
+
+    </script>
 
 </body>
 </html>
