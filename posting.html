@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="styles.css">
+
     <style>
         /* Add styles to the button */
         #createPostButton {
@@ -89,8 +91,8 @@
             <!-- Add an id to the form and the textarea -->
             <form id="post-form" action="#" method="post">
                 <!-- Title Field -->
-                <input type="text" name="post-title" id="post-title" placeholder="Title" required style="width: 100%;">
-                <textarea name="post-content" id="post-content" rows="8" placeholder="Write your post here..." required></textarea>
+                <input type="text" name="post-title" id="post-title" placeholder="Title" required style="width: 100%;" dir="auto">
+                <textarea name="post-content" id="post-content" rows="8" placeholder="Write your post here..." required dir="auto"></textarea>
                 <!-- Add an id to the button -->
                 <button id="createPostButton" type="button">Create New Post</button>
             </form>
@@ -101,59 +103,111 @@
     </footer>
 
     <!-- JavaScript functions -->
-    <script>
-        function insertEmoji(emoji) {
-            const postContent = document.getElementById('post-content');
-            const currentCursorPosition = postContent.selectionStart;
-            const textBeforeCursor = postContent.value.substring(0, currentCursorPosition);
-            const textAfterCursor = postContent.value.substring(currentCursorPosition);
-            postContent.value = textBeforeCursor + emoji + textAfterCursor;
+<!-- JavaScript functions -->
+<script>
+    // Define a variable to keep track of the last active text field
+    let lastActiveTextField = null;
+
+    // Function to set the last active text field
+    function setLastActiveTextField(textField) {
+        lastActiveTextField = textField;
+    }
+
+    function insertEmoji(emoji) {
+        if (lastActiveTextField) {
+            const currentCursorPosition = lastActiveTextField.selectionStart;
+            const textBeforeCursor = lastActiveTextField.value.substring(0, currentCursorPosition);
+            const textAfterCursor = lastActiveTextField.value.substring(currentCursorPosition);
+            lastActiveTextField.value = textBeforeCursor + emoji + textAfterCursor;
+            lastActiveTextField.focus();
         }
+    }
 
-        function selectCategory(element, category) {
-            // Remove the "selected" class from all categories
-            const categories = document.querySelectorAll('.category');
-            categories.forEach((item) => {
-                item.classList.remove('selected');
-            });
+    // Select all input fields on the page
+    const inputFields = document.querySelectorAll("input, textarea");
 
-            // Add the "selected" class to the clicked category
-            element.classList.add('selected');
-        }
+    // Attach the focus event listener to all input fields
+    inputFields.forEach(function(inputField) {
+        inputField.addEventListener("focus", function() {
+            setLastActiveTextField(this);
+        });
+    });
 
-        // Select the default category on page load
-        window.addEventListener('load', () => {
-            const defaultCategory = document.querySelector('.category.selected');
-            selectCategory(defaultCategory, defaultCategory.innerText);
+    function selectCategory(element, category) {
+        // Remove the "selected" class from all categories
+        const categories = document.querySelectorAll('.category');
+        categories.forEach((item) => {
+            item.classList.remove('selected');
         });
 
-        function openGitHubIssues() {
-            const selectedCategory = document.querySelector('.category.selected').textContent;
-            const postContent = document.getElementById('post-content').value;
-            const postTitle = document.getElementById('post-title').value;
-            const title = encodeURIComponent(`${postTitle}`);
-            const body = encodeURIComponent(`${postContent}`);
-            const url = `https://github.com/nimafanniasl/GithubForum/issues/new?title=${title}&body=${body}&labels=${selectedCategory}`;
+        // Add the "selected" class to the clicked category
+        element.classList.add('selected');
 
-            // Show the instruction message
-            const popupInstruction = document.getElementById('popupInstruction');
-            popupInstruction.style.display = 'block';
+        // Get the label color based on the selected category
+        fetchLabelColors(category);
+    }
 
-            // Open the popup
-            const popupWindow = window.open(url, "_blank", "width=600,height=400");
+    // Select the default category on page load
+    window.addEventListener('load', () => {
+        const defaultCategory = document.querySelector('.category.selected');
+        selectCategory(defaultCategory, defaultCategory.innerText);
+    });
 
-            // Check if the popup is closed and hide the instruction
-            const checkPopupClosed = setInterval(() => {
-                if (popupWindow.closed) {
-                    popupInstruction.style.display = 'none';
-                    clearInterval(checkPopupClosed);
-                }
-            }, 1000); // Check every 1 second
+    function openGitHubIssues() {
+        const selectedCategory = document.querySelector('.category.selected').textContent;
+        const postContent = document.getElementById('post-content').value;
+        const postTitle = document.getElementById('post-title').value;
+        const title = encodeURIComponent(`${postTitle}`);
+        const body = encodeURIComponent(`${postContent}`);
+        const url = `https://github.com/nimafanniasl/GithubForum/issues/new?title=${title}&body=${body}&labels=${selectedCategory}`;
+
+        // Show the instruction message
+        const popupInstruction = document.getElementById('popupInstruction');
+        popupInstruction.style.display = 'block';
+
+        // Open the popup
+        const popupWindow = window.open(url, "_blank", "width=600,height=400");
+
+        // Check if the popup is closed and hide the instruction
+        const checkPopupClosed = setInterval(() => {
+            if (popupWindow.closed) {
+                popupInstruction.style.display = 'none';
+                clearInterval(checkPopupClosed);
+            }
+        }, 1000); // Check every 1 second
+    }
+
+    // Attach the click event listener to the button
+    document.getElementById("createPostButton").addEventListener("click", openGitHubIssues);
+
+    // Function to fetch label colors from GitHub API without authentication
+    async function fetchLabelColors() {
+        const selectedCategory = document.querySelector('.category.selected').textContent;
+
+        try {
+            const response = await fetch(`/repos/nimafanniasl/GithubForum/labels`);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch labels from GitHub API');
+            }
+
+            const labels = await response.json();
+
+            // Find the label with the selected category name
+            const selectedLabel = labels.find((label) => label.name === selectedCategory);
+
+            if (selectedLabel) {
+                const labelColor = `#${selectedLabel.color}`;
+                // Update the label text color
+                const selectedCategoryElement = document.querySelector('.category.selected');
+                selectedCategoryElement.style.color = labelColor;
+            }
+        } catch (error) {
+            console.error('Error fetching label colors:', error);
         }
+    }
 
-        // Attach the click event listener to the button
-        document.getElementById("createPostButton").addEventListener("click", openGitHubIssues);
+</script>
 
-    </script>
 </body>
 </html>
