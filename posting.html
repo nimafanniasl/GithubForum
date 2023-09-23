@@ -181,11 +181,12 @@
     document.getElementById("createPostButton").addEventListener("click", openGitHubIssues);
 
     // Function to fetch label colors from GitHub API without authentication
-    async function fetchLabelColors() {
-        const selectedCategory = document.querySelector('.category.selected').textContent;
+    async function fetchLabelColors(category) {
+        const owner = 'nimafanniasl'; // Replace with the owner of your GitHub repository
+        const repo = 'GithubForum'; // Replace with the name of your GitHub repository
 
         try {
-            const response = await fetch(`/repos/nimafanniasl/GithubForum/labels`);
+            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/labels`);
 
             if (!response.ok) {
                 throw new Error('Failed to fetch labels from GitHub API');
@@ -194,7 +195,7 @@
             const labels = await response.json();
 
             // Find the label with the selected category name
-            const selectedLabel = labels.find((label) => label.name === selectedCategory);
+            const selectedLabel = labels.find((label) => label.name === category);
 
             if (selectedLabel) {
                 const labelColor = `#${selectedLabel.color}`;
@@ -206,7 +207,6 @@
             console.error('Error fetching label colors:', error);
         }
     }
-
 </script>
 
 </body>
