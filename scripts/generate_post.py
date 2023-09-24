@@ -53,7 +53,7 @@ html_content = html_content.replace("{POST-CONTENT}", post_content)
 
 
 # Define the output directory
-output_directory = "../posts"
+output_directory = "posts"
 
 # Ensure the output directory exists
 os.makedirs(output_directory, exist_ok=True)
