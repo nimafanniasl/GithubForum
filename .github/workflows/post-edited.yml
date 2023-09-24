@@ -1,4 +1,4 @@
-name: Generate Post HTML
+name: Generate Edited Post HTML
 
 on:
   issues:
