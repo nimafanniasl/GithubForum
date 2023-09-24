@@ -1,1 +1,1 @@
-exclude: [.github, scripts]
+exclude: [.github, scripts, requirements.txt]
