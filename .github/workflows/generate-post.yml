@@ -36,12 +36,13 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - name: Create Comment
+        uses: actions/github-script@v6
         with:
           script: |
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Thanks for submmiting a new post! it's going to be available after a few seconds in https://nimafanniasl.github.io/GithubForum/posts/${{ github.event.issue.number }}.html'
+              body: "Thanks for submitting a new post! It's going to be available after a few seconds in https://nimafanniasl.github.io/GithubForum/posts/${{ github.event.issue.number }}.html"
             })
