@@ -59,6 +59,6 @@ output_directory = "../posts"
 os.makedirs(output_directory, exist_ok=True)
 
 # Save the HTML content to a file
-output_file_path = os.path.join(output_directory, f"#{issue_number}.html")
+output_file_path = os.path.join(output_directory, f"{issue_number}.html")
 with open(output_file_path, "w") as f:
     f.write(html_content)
