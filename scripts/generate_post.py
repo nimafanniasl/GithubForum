@@ -3,41 +3,10 @@ import sys
 from datetime import datetime
 
 # Template for the HTML file
-template = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/styles.css">
-    <title>{POST-TITLE} - GithubForum</title>
-</head>
-<body>
-    <header>
-        <h1>GithubForum</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="recent.html">Recent Posts</a></li>
-                <li><a href="categories.html">Categories</a></li>
-                <li><a href="posting.html">Post a new topic</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="post">
-            <h2>{POST-TITLE}</h2>
-            <p>{POST-AUTHOR} | Date: {POST-DATE} | Post #{POST-NUMBER}</p> <!--POST-Number is the issue number in github, for example #23-->
-            <p dir="auto">{POST-CONTENT}</p>
-            <!-- Add post content here -->
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 GithubForum</p>
-    </footer>
-</body>
-</html>
-"""
+template_file_path = "templates/posttemplate.html"
+
+with open(template_file_path, "r") as template_file:
+    template = template_file.read()
 
 # Replace placeholders with actual data
 issue_number = sys.argv[1]
