@@ -3,8 +3,7 @@ name: Generate Post HTML
 on:
   issues:
     types:
-      - opened  # Trigger on new issue creation
-      # - edited  # Trigger on edited issue
+      - edited  # Trigger on edited issue
 
 jobs:
   generate-post:
@@ -32,16 +31,3 @@ jobs:
           git add .
           git commit -m "Generate HTML for issue #${{ github.event.issue.number }}"
           git push
-
-  comment:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Thanks for submmiting a new post! it's going to be available after a few seconds in https://nimafanniasl.github.io/GithubForum/posts/${{ github.event.issue.number }}.html'
-            })

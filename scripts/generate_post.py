@@ -9,8 +9,8 @@ template = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/styles.css">
-    <title>Example Post</title>
+    <link rel="stylesheet" href="../style/styles.css">
+    <title>{POST-TITLE} - GithubForum</title>
 </head>
 <body>
     <header>
@@ -53,12 +53,12 @@ html_content = html_content.replace("{POST-CONTENT}", post_content)
 
 
 # Define the output directory
-output_directory = "posts"
+output_directory = "../posts"
 
 # Ensure the output directory exists
 os.makedirs(output_directory, exist_ok=True)
 
 # Save the HTML content to a file
-output_file_path = os.path.join(output_directory, f"{issue_number}.html")
+output_file_path = os.path.join(output_directory, f"#{issue_number}.html")
 with open(output_file_path, "w") as f:
     f.write(html_content)
