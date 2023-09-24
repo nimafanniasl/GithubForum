@@ -1,6 +1,8 @@
 import os
 import sys
 from datetime import datetime
+import json
+import requests
 
 # Template for the HTML file
 template_file_path = "templates/posttemplate.html"
@@ -14,11 +16,14 @@ post_title = sys.argv[2]
 post_author = sys.argv[3]
 post_content = sys.argv[4]
 
+pfp_url = json.loads(requests.get(f"https://api.github.com/users/{post_author}").text)["avatar_url"]
+
 html_content = template.replace("{POST-TITLE}", post_title)
 html_content = html_content.replace("{POST-AUTHOR}", post_author)
 html_content = html_content.replace("{POST-DATE}", datetime.now().strftime("%Y-%m-%d"))
 html_content = html_content.replace("{POST-NUMBER}", issue_number)
 html_content = html_content.replace("{POST-CONTENT}", post_content)
+html_content = html_content.replace("{PFP-URL}", pfp_url)
 
 
 # Define the output directory

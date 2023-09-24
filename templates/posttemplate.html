@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/styles.css">
+    <style>
+        /* CSS for styling the profile picture and post details */
+        .post-form {
+            display: flex;
+            align-items: center;
+        }
+
+        img {
+            width: 15%; /* Adjust the width as needed */
+            height: 15%; /* Adjust the height as needed */
+            margin-right: 10px;
+        }
+
+        .post-details {
+            flex-grow: 1; /* Allow the details to take up remaining space */
+        }
+
+        .post-details p {
+            margin: 0; /* Remove default margin */
+        }
+    </style>
     <title>{POST-TITLE} - GithubForum</title>
 </head>
 <body>
@@ -11,18 +32,21 @@
         <h1>GithubForum</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="recent.html">Recent Posts</a></li>
-                <li><a href="categories.html">Categories</a></li>
-                <li><a href="posting.html">Post a new topic</a></li>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/recent.html">Recent Posts</a></li>
+                <li><a href="/categories.html">Categories</a></li>
+                <li><a href="/posting.html">Post a new topic</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section class="post">
-            <h2>{POST-TITLE}</h2>
-            <p>{POST-AUTHOR} | Date: {POST-DATE} | Post #{POST-NUMBER}</p> <!--POST-Number is the issue number in github, for example #23-->
-            <pre dir="auto">{POST-CONTENT}</p>
+        <section class="post-form">
+            <img src="{PFP-URL}" alt="Profile Picture">
+            <div class="post-details">
+                <h2>{POST-TITLE}</h2>
+                <p><a href="http://github.com/{POST-AUTHOR}">{POST-AUTHOR}</a> | Date: {POST-DATE} | Post #{POST-NUMBER}</p>
+                <p dir="auto">{POST-CONTENT}</p>
+            </div>
         </section>
     </main>
     <footer>
