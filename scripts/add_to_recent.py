@@ -1,8 +1,6 @@
 import sys
-import os
 from datetime import datetime
 from bs4 import BeautifulSoup
-from lxml import etree, html
 
 def add_section_to_html(html_file, new_section_html):
     with open(html_file, 'r') as file:
