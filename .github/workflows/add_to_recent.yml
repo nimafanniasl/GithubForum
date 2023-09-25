@@ -1,0 +1,34 @@
+name: Add new post to recents page
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt  # If you have any dependencies
+
+      - name: Add new post to recents page
+        run:  python scripts/add_to_recent.py ${{ github.event.issue.number }} "${{ github.event.issue.title }}" "${{ github.event.issue.user.login }}" "${{ github.event.issue.body }}"
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Remove HTML of issue #${{ github.event.issue.number }}"
+          git push

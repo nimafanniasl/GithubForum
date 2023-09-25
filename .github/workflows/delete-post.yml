@@ -1,0 +1,22 @@
+name: Remove Post HTML
+
+on:
+  issues:
+    types:
+      - deleted
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Remove Post HTML
+        run:  rm posts/${{ github.event.issue.number }}.html
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Remove HTML of Deleted issue #${{ github.event.issue.number }}"
+          git push
