@@ -13,6 +13,9 @@ jobs:
       - name: Remove Post HTML
         run:  rm posts/${{ github.event.issue.number }}.html
 
+      - name: Remove from recents
+        run: python scripts/remove_from_recent.py ${{ github.event.issue.number }}
+
       - name: Commit and Push Changes
         run: |
           git config --local user.email "action@github.com"
