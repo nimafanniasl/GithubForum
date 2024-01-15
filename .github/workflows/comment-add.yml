@@ -23,3 +23,11 @@ jobs:
 
       - name: Run the script
         run: python scripts/issue_comment.py add ${{ github.event.issue.number }} "${{ github.event.comment.user.login }}" "${{ github.event.comment.body }}"
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Add comment to issue #${{ github.event.issue.number }}"
+          git push
