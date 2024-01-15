@@ -161,6 +161,10 @@ footer {
     border-radius: 20px;
 }
 
+.pfp {
+    border-radius: 50%;
+}
+
 .post-form h2 {
     font-size: 24px;
     margin-bottom: 10px;
@@ -262,7 +266,6 @@ button[type="submit"]:hover {
 }
 
 footer {
-    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -270,7 +273,12 @@ footer {
     color: #fff;
     text-align: center;
     padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
+
 
 /* CSS for the growing color effect */
 .grow-color {
@@ -301,4 +309,44 @@ footer {
 
 .post-form p {
     white-space: pre-wrap;
+}
+
+/* Add this style to match your existing styles */
+#writeCommentBtn {
+    background-color: #007BFF;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#writeCommentBtn:hover {
+    background-color: #0056b3;
+}
+
+#ShareBtn {
+    background-color: #007BFF;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+#ShareBtn:hover {
+    background-color: #0056b3;
+}
+
+#button-row {
+    display: flex;
+    justify-content: center;
 }

@@ -24,6 +24,7 @@
         .post-details p {
             margin: 0; /* Remove default margin */
         }
+
     </style>
     <title>{POST-TITLE} - GithubForum</title>
 </head>
@@ -41,16 +42,33 @@
     </header>
     <main>
         <section class="post-form">
-            <img src="{PFP-URL}" alt="Profile Picture">
+            <img src="{PFP-URL}" alt="Profile Picture" class="pfp">
             <div class="post-details">
                 <h2>{POST-TITLE}</h2>
                 <p><a href="http://github.com/{POST-AUTHOR}">{POST-AUTHOR}</a> | Date: {POST-DATE} | Post #{POST-NUMBER}</p>
-                <p dir="auto">{POST-CONTENT}</p>
+                <p dir="auto" style="font-size: large;">{POST-CONTENT}</p>
             </div>
         </section>
+        <div id="button-row">
+            <button id="writeCommentBtn">Write Comment</button>
+            <!-- <button id="ShareBtn">Share</button> -->
+        </div>
     </main>
     <footer>
-        <p>&copy; 2023 GithubForum</p>
+        <p>&copy; 2024 GithubForum</p>
     </footer>
+    <script>
+        // JavaScript function for the button click
+        document.getElementById("writeCommentBtn").addEventListener("click", function() {
+            // Display an alert with the desired message
+            var confirmation = confirm("You are about to be redirected to GitHub. Write your response there and send it.");
+
+            // If the user clicks OK in the alert, redirect to the GitHub issue page
+            if (confirmation) {
+                var issueNumber = "{POST-NUMBER}";
+                window.open("https://github.com/nimafanniasl/GithubForum/issues/" + issueNumber, "_blank");
+            }
+        });
+    </script>
 </body>
 </html>

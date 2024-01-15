@@ -24,8 +24,9 @@
         .post-details p {
             margin: 0; /* Remove default margin */
         }
+
     </style>
-    <title>Test - GithubForum</title>
+    <title>تست - GithubForum</title>
 </head>
 <body>
     <header>
@@ -41,17 +42,33 @@
     </header>
     <main>
         <section class="post-form">
-            <img src="https://avatars.githubusercontent.com/u/76901932?v=4" alt="Profile Picture">
+            <img src="https://avatars.githubusercontent.com/u/76901932?v=4" alt="Profile Picture" class="pfp">
             <div class="post-details">
-                <h2>Test</h2>
-                <p><a href="http://github.com/nimafanniasl">nimafanniasl</a> | Date: 2023-09-24 | Post #14</p>
-                <p dir="auto">Test
-Test edit</p>
+                <h2>تست</h2>
+                <p><a href="http://github.com/nimafanniasl">nimafanniasl</a> | Date: 2024-01-15 | Post #5</p>
+                <p dir="auto" style="font-size: large;">سلام</p>
             </div>
         </section>
+        <div id="button-row">
+            <button id="writeCommentBtn">Write Comment</button>
+            <!-- <button id="ShareBtn">Share</button> -->
+        </div>
     </main>
     <footer>
-        <p>&copy; 2023 GithubForum</p>
+        <p>&copy; 2024 GithubForum</p>
     </footer>
+    <script>
+        // JavaScript function for the button click
+        document.getElementById("writeCommentBtn").addEventListener("click", function() {
+            // Display an alert with the desired message
+            var confirmation = confirm("You are about to be redirected to GitHub. Write your response there and send it.");
+
+            // If the user clicks OK in the alert, redirect to the GitHub issue page
+            if (confirmation) {
+                var issueNumber = "5";
+                window.open("https://github.com/nimafanniasl/GithubForum/issues/" + issueNumber, "_blank");
+            }
+        });
+    </script>
 </body>
 </html>
