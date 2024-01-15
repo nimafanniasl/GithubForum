@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/styles.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../style/styles.css" rel="stylesheet"/>
+<style>
         /* CSS for styling the profile picture and post details */
         .post-form {
             display: flex;
@@ -26,38 +27,44 @@
         }
 
     </style>
-    <title>Testing - GithubForum</title>
+<title>Testing - GithubForum</title>
 </head>
 <body>
-    <header>
-        <h1>GithubForum</h1>
-        <nav>
-            <ul>
-                <li><a href="/index.html">Home</a></li>
-                <li><a href="/recent.html">Recent Posts</a></li>
-                <li><a href="/categories.html">Categories</a></li>
-                <li><a href="/posting.html">Post a new topic</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="post-form">
-            <img src="https://avatars.githubusercontent.com/u/76901932?v=4" alt="Profile Picture" class="pfp">
-            <div class="post-details">
-                <h2>Testing</h2>
-                <p><a href="http://github.com/nimafanniasl">nimafanniasl</a> | Date: 2024-01-15 | Post #18</p>
-                <p dir="auto" style="font-size: large;">Testing :)</p>
-            </div>
-        </section>
-        <div id="button-row">
-            <button id="writeCommentBtn">Write Comment</button>
-            <!-- <button id="ShareBtn">Share</button> -->
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 GithubForum</p>
-    </footer>
-    <script>
+<header>
+<h1>GithubForum</h1>
+<nav>
+<ul>
+<li><a href="/index.html">Home</a></li>
+<li><a href="/recent.html">Recent Posts</a></li>
+<li><a href="/categories.html">Categories</a></li>
+<li><a href="/posting.html">Post a new topic</a></li>
+</ul>
+</nav>
+</header>
+<main>
+<section class="post-form">
+<img alt="Profile Picture" class="pfp" src="https://avatars.githubusercontent.com/u/76901932?v=4"/>
+<div class="post-details">
+<h2>Testing</h2>
+<p><a href="http://github.com/nimafanniasl">nimafanniasl</a> | Date: 2024-01-15 | Post #18</p>
+<p dir="auto" style="font-size: large;">Testing :)</p>
+</div>
+</section>
+<div id="button-row">
+<button id="writeCommentBtn">Write Comment</button>
+<!-- <button id="ShareBtn">Share</button> -->
+</div>
+<section class="post-form">
+<img alt="Profile Picture" class="pfp" src="https://avatars.githubusercontent.com/u/76901932?v=4"/>
+<div class="post-details">
+<p><a href="http://github.com/nimafanniasl">nimafanniasl</a> | Date: 2024-01-15</p>
+<p dir="auto" style="font-size: large;">Testing again</p>
+</div>
+</section></main>
+<footer>
+<p>© 2024 GithubForum</p>
+</footer>
+<script>
         // JavaScript function for the button click
         document.getElementById("writeCommentBtn").addEventListener("click", function() {
             // Display an alert with the desired message
