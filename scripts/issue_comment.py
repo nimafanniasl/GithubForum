@@ -1,18 +1,17 @@
 import sys
 import os
-import json
-import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+from includes import *
 
 mode = sys.argv[1]
 issue_number = sys.argv[2]
 post_author = sys.argv[3]
-post_content = sys.argv[4]
+post_content = convert_md_to_html(sys.argv[4])
 
 
 if mode.lower() == "add":
-    pfp_url = json.loads(requests.get(f"https://api.github.com/users/{post_author}").text)["avatar_url"]
+    pfp_url = get_pfp(post_author)
 
     posts_dir = "posts"
     issue_html = os.path.join(posts_dir, f"{issue_number}.html")
