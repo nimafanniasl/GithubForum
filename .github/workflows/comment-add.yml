@@ -1,5 +1,4 @@
 name: Add Comment to post page
-#TODO: Format the body as html then pass it to issue_comment.py
 
 on:
   issue_comment:
