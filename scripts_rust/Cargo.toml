@@ -8,9 +8,14 @@ authors = ["nimafanniasl"]
 
 [dependencies]
 reqwest = { version = "0.11.24", features = ["default", "json", "blocking"] }
+select = "0.6.0"
 serde_json = "1.0.113"
 
 
 [[bin]]
 name = "generate_post"
 path = "src/generate_post.rs"
+
+[[bin]]
+name = "add_to_recent"
+path = "src/add_to_recent.rs"
