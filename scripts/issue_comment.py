@@ -11,8 +11,6 @@ post_content = convert_md_to_html(sys.argv[4])
 
 
 if mode.lower() == "add":
-    pfp_url = get_pfp(post_author)
-
     posts_dir = "posts"
     issue_html = os.path.join(posts_dir, f"{issue_number}.html")
 
@@ -23,7 +21,6 @@ if mode.lower() == "add":
     isuue_comment_template = isuue_comment_template.replace("{POST-AUTHOR}", post_author)
     isuue_comment_template = isuue_comment_template.replace("{POST-DATE}",
                                                             datetime.now().strftime("%Y-%m-%d"))
-    isuue_comment_template = isuue_comment_template.replace("{PFP-URL}", pfp_url)
 
     # Read existing issue_html content and parse it with BeautifulSoup
     with open(issue_html, "r", encoding="utf-8") as html_file:

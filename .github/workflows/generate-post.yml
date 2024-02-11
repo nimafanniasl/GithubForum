@@ -23,17 +23,17 @@ jobs:
         run: pip install -r requirements.txt  # If you have any dependencies
 
       - name: Generate Post HTML
-        run: python scripts/generate_post.py ${{ github.event.issue.number }} "${{ github.event.issue.title }}" "${{ github.event.issue.user.login }}" "${{ github.event.issue.body }}"
+        run: python scripts/generate_post ${{ github.event.issue.number }} "${{ github.event.issue.title }}" "${{ github.event.issue.user.login }}" "${{ github.event.issue.body }}" "${{ format(github.event.issue.created_at, 'YYYY-MM-DD HH:mm:ss') }}"
 
       - name: Add new post to recents page
-        run:  python scripts/add_to_recent.py ${{ github.event.issue.number }} "${{ github.event.issue.title }}" "${{ github.event.issue.user.login }}" "${{ github.event.issue.body }}"
+        run:  python scripts/add_to_recent.py ${{ github.event.issue.number }} "${{ github.event.issue.title }}" "${{ github.event.issue.user.login }}" "${{ github.event.issue.body }}" "${{ format(github.event.issue.created_at, 'YYYY-MM-DD HH:mm:ss') }}"
 
       - name: Commit and Push Changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git commit -m "Generate HTML for issue #${{ github.event.issue.number }}"
+          git commit -m "Generate Post page for issue #${{ github.event.issue.number }}"
           git push
 
   comment:
@@ -47,5 +47,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "Your post going to be available after a few seconds in https://nimafanniasl.github.io/GithubForum/posts/${{ github.event.issue.number }}.html"
+              body: "Your post is going to be available after a few seconds in https://nimafanniasl.github.io/GithubForum/posts/${{ github.event.issue.number }}.html"
             })

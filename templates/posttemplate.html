@@ -42,8 +42,9 @@
     </header>
     <main>
         <section class="post-form">
-            <img src="{PFP-URL}" alt="Profile Picture" class="pfp">
+            <img src="" alt="" class="pfp">
             <div class="post-details">
+                <!-- Github username: {POST-AUTHOR} -->
                 <h2>{POST-TITLE}</h2>
                 <p><a href="http://github.com/{POST-AUTHOR}">{POST-AUTHOR}</a> | Date: {POST-DATE} | Post #{POST-NUMBER}</p>
                 <p dir="auto" style="font-size: large;">{POST-CONTENT}</p>
@@ -69,6 +70,35 @@
                 window.open("https://github.com/nimafanniasl/GithubForum/issues/" + issueNumber + "#new_comment_field", "_blank");
             }
         });
+
+        // Function to fetch and update profile pictures
+        function updateProfilePictures() {
+            // Get all sections with the class "post-form"
+            const postForms = document.querySelectorAll('.post-form');
+
+            // Loop through each section
+            postForms.forEach(postForm => {
+                // Extract the GitHub username from the comment
+                const comment = postForm.querySelector('div.post-details').innerHTML;
+                const username = comment.match(/Github username: (\w+)/)[1];
+
+                // Fetch avatar URL from GitHub API
+                fetch(`https://api.github.com/users/${username}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const avatarUrl = data.avatar_url;
+
+                        // Update the profile picture with the fetched avatar URL
+                        const profilePic = postForm.querySelector('img.pfp');
+                        profilePic.src = avatarUrl;
+                        profilePic.alt = "Profile Picture";
+                    })
+                    .catch(error => console.error('Error fetching avatar:', error));
+            });
+        }
+
+        // Call the function when the page is loaded
+        window.addEventListener('DOMContentLoaded', updateProfilePictures);
     </script>
 </body>
 </html>

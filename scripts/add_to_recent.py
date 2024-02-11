@@ -51,6 +51,7 @@ if __name__ == "__main__":
     post_title = sys.argv[2]
     post_author = sys.argv[3]
     post_content = sys.argv[4]
+    post_created_date = sys.argv[5]
 
     post_content = "".join(post_content[:70]) + "..."
     print(post_content)
@@ -62,12 +63,12 @@ if __name__ == "__main__":
 
     new_section_html = new_section_html.replace("{POST-TITLE}", post_title)
     new_section_html = new_section_html.replace("{POST-AUTHOR}", post_author)
-    new_section_html = new_section_html.replace("{POST-DATE}", datetime.now().strftime("%Y-%m-%d"))
+    new_section_html = new_section_html.replace("{POST-DATE}", post_created_date)
     new_section_html = new_section_html.replace("{POST-NUMBER}", issue_number)
     new_section_html = new_section_html.replace("{MINIFIED-POST-CONTENT}", post_content)
     new_section_html = new_section_html.replace("{POST-PAGE-LINK}", f"https://nimafanniasl.github.io/GithubForum/posts/{issue_number}.html")
 
-    # Remove suplicate post
+    # Remove duplicate post
     remove_duplicate_posts(recent_html, issue_number)
 
     # Add the new section to the HTML file
