@@ -23,7 +23,7 @@ jobs:
         run: pip install -r requirements.txt  # If you have any dependencies
 
       - name: Generate Post HTML
-        run: python scripts/generate_post ${{ github.event.issue.number }} "${{ github.event.issue.title }}" "${{ github.event.issue.user.login }}" "${{ github.event.issue.body }}" "${{ format(github.event.issue.created_at, 'YYYY-MM-DD HH:mm:ss') }}"
+        run: ./scripts/generate_post ${{ github.event.issue.number }} "${{ github.event.issue.title }}" "${{ github.event.issue.user.login }}" "${{ github.event.issue.body }}" "${{ format(github.event.issue.created_at, 'YYYY-MM-DD HH:mm:ss') }}"
 
       - name: Add new post to recents page
         run:  python scripts/add_to_recent.py ${{ github.event.issue.number }} "${{ github.event.issue.title }}" "${{ github.event.issue.user.login }}" "${{ github.event.issue.body }}" "${{ format(github.event.issue.created_at, 'YYYY-MM-DD HH:mm:ss') }}"
