@@ -13,12 +13,12 @@ fn main() {
     let post_content = &args[4];
     let post_created_date = &args[5];
 
-    let template_file_path = "../templates/posttemplate.html";
+    let template_file_path = "templates/posttemplate.html";
 
     let template_file = fs::read_to_string(template_file_path)
         .expect("Should have been able to read the file");
 
-    let output_directory = "../posts";
+    let output_directory = "posts";
 
 
     let mut html_content = String::from(template_file);
