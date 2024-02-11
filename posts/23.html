@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/styles.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="../style/styles.css" rel="stylesheet"/>
+<style>
         /* CSS for styling the profile picture and post details */
         .post-form {
             display: flex;
@@ -26,39 +27,47 @@
         }
 
     </style>
-    <title>Hi! - GithubForum</title>
+<title>Hi! - GithubForum</title>
 </head>
 <body>
-    <header>
-        <h1>GithubForum</h1>
-        <nav>
-            <ul>
-                <li><a href="https://nimafanniasl.github.io/GithubForum/index.html">Home</a></li>
-                <li><a href="https://nimafanniasl.github.io/GithubForum/recent.html">Recent Posts</a></li>
-                <li><a href="https://nimafanniasl.github.io/GithubForum/categories.html">Categories</a></li>
-                <li><a href="https://nimafanniasl.github.io/GithubForum/posting.html">Post a new topic</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section class="post-form">
-            <img src="/GithubForum/resources/Spinner.svg" alt="Loading..." class="pfp">
-            <div class="post-details">
-                <!-- Github username: nimafanniasl -->
-                <h2>Hi!</h2>
-                <p><a href="http://github.com/nimafanniasl">nimafanniasl</a> | Date: 2024-02-11T17:46:25Z | Post #23</p>
-                <p dir="auto" style="font-size: large;">First rust port? (this time fr fr)</p>
-            </div>
-        </section>
-        <div id="button-row">
-            <button id="writeCommentBtn">Write Comment</button>
-            <!-- <button id="ShareBtn">Share</button> -->
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 GithubForum</p>
-    </footer>
-    <script>
+<header>
+<h1>GithubForum</h1>
+<nav>
+<ul>
+<li><a href="https://nimafanniasl.github.io/GithubForum/index.html">Home</a></li>
+<li><a href="https://nimafanniasl.github.io/GithubForum/recent.html">Recent Posts</a></li>
+<li><a href="https://nimafanniasl.github.io/GithubForum/categories.html">Categories</a></li>
+<li><a href="https://nimafanniasl.github.io/GithubForum/posting.html">Post a new topic</a></li>
+</ul>
+</nav>
+</header>
+<main>
+<section class="post-form">
+<img alt="Loading..." class="pfp" src="/GithubForum/resources/Spinner.svg"/>
+<div class="post-details">
+<!-- Github username: nimafanniasl -->
+<h2>Hi!</h2>
+<p><a href="http://github.com/nimafanniasl">nimafanniasl</a> | Date: 2024-02-11T17:46:25Z | Post #23</p>
+<p dir="auto" style="font-size: large;">First rust port? (this time fr fr)</p>
+</div>
+</section>
+<div id="button-row">
+<button id="writeCommentBtn">Write Comment</button>
+<!-- <button id="ShareBtn">Share</button> -->
+</div>
+<section class="post-form">
+<img alt="Loading..." class="pfp" src="/GithubForum/resources/Spinner.svg"/>
+<div class="post-details">
+<!-- Github username: nimafanniasl -->
+<p><a href="http://github.com/nimafanniasl">nimafanniasl</a> | Date: 2024-02-11</p>
+<p dir="auto" style="font-size: large;"><p>I meant post lol</p>
+</p>
+</div>
+</section></main>
+<footer>
+<p>© 2024 GithubForum</p>
+</footer>
+<script>
         // JavaScript function for the button click
         document.getElementById("writeCommentBtn").addEventListener("click", function() {
             // Display an alert with the desired message
