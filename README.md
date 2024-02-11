@@ -7,3 +7,4 @@
 - [ ] Make the header and footer dynamic and load from a javascript file
 - [ ] Add reactions to posts
 - [ ] access for everyone to assign posts to labels
+- [ ] Toggle for switching between light and dark mode
