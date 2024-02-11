@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/styles.css">
+    <style>
+        /* CSS for styling the profile picture and post details */
+        .post-form {
+            display: flex;
+            align-items: center;
+        }
+
+        img {
+            width: 15%; /* Adjust the width as needed */
+            height: 15%; /* Adjust the height as needed */
+            margin-right: 10px;
+        }
+
+        .post-details {
+            flex-grow: 1; /* Allow the details to take up remaining space */
+        }
+
+        .post-details p {
+            margin: 0; /* Remove default margin */
+        }
+
+    </style>
+    <title>Hi! - GithubForum</title>
+</head>
+<body>
+    <header>
+        <h1>GithubForum</h1>
+        <nav>
+            <ul>
+                <li><a href="https://nimafanniasl.github.io/GithubForum/index.html">Home</a></li>
+                <li><a href="https://nimafanniasl.github.io/GithubForum/recent.html">Recent Posts</a></li>
+                <li><a href="https://nimafanniasl.github.io/GithubForum/categories.html">Categories</a></li>
+                <li><a href="https://nimafanniasl.github.io/GithubForum/posting.html">Post a new topic</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="post-form">
+            <img src="" alt="" class="pfp">
+            <div class="post-details">
+                <!-- Github username: nimafanniasl -->
+                <h2>Hi!</h2>
+                <p><a href="http://github.com/nimafanniasl">nimafanniasl</a> | Date: 2024-02-11T17:46:25Z | Post #23</p>
+                <p dir="auto" style="font-size: large;">First rust port? (this time fr fr)</p>
+            </div>
+        </section>
+        <div id="button-row">
+            <button id="writeCommentBtn">Write Comment</button>
+            <!-- <button id="ShareBtn">Share</button> -->
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 GithubForum</p>
+    </footer>
+    <script>
+        // JavaScript function for the button click
+        document.getElementById("writeCommentBtn").addEventListener("click", function() {
+            // Display an alert with the desired message
+            var confirmation = confirm("You are about to be redirected to GitHub. Write your response there and send it.");
+
+            // If the user clicks OK in the alert, redirect to the GitHub issue page
+            if (confirmation) {
+                var issueNumber = "23";
+                window.open("https://github.com/nimafanniasl/GithubForum/issues/" + issueNumber + "#new_comment_field", "_blank");
+            }
+        });
+
+        // Function to fetch and update profile pictures
+        function updateProfilePictures() {
+            // Get all sections with the class "post-form"
+            const postForms = document.querySelectorAll('.post-form');
+
+            // Loop through each section
+            postForms.forEach(postForm => {
+                // Extract the GitHub username from the comment
+                const comment = postForm.querySelector('div.post-details').innerHTML;
+                const username = comment.match(/Github username: (\w+)/)[1];
+
+                // Fetch avatar URL from GitHub API
+                fetch(`https://api.github.com/users/${username}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const avatarUrl = data.avatar_url;
+
+                        // Update the profile picture with the fetched avatar URL
+                        const profilePic = postForm.querySelector('img.pfp');
+                        profilePic.src = avatarUrl;
+                        profilePic.alt = "Profile Picture";
+                    })
+                    .catch(error => console.error('Error fetching avatar:', error));
+            });
+        }
+
+        // Call the function when the page is loaded
+        window.addEventListener('DOMContentLoaded', updateProfilePictures);
+    </script>
+</body>
+</html>
