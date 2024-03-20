@@ -1,77 +1,42 @@
-// import sys
-// from datetime import datetime
-// from bs4 import BeautifulSoup
+use std::env;
+use std::fs;
 
-// def add_section_to_html(html_file, new_section_html):
-//     with open(html_file, 'r') as file:
-//         soup = BeautifulSoup(file, 'html.parser')
+fn remove_duplicate_posts(html_file_addr: &str, issue_number: &str) {
+    // Python code here
+}
 
-//     main_tag = soup.find('main')
+fn add_section_to_html(html_file_addr: &str, new_section_html: &str) {
+    // Python code here
+}
 
-//     if main_tag:
-//         # Create a new section and add it to the top of the main element
-//         new_section = BeautifulSoup(new_section_html, 'html.parser')
-//         main_tag.insert(0, new_section)
+fn remove_oldest_section(html_file_addr: &str) {
+    // Python code here
+}
 
-//     with open(html_file, 'w') as file:
-//         file.write(str(soup))
+fn main() {
+    let args: Vec<String> = env::args().collect();
 
-// def remove_oldest_section(html_file):
-//     with open(html_file, 'r') as file:
-//         soup = BeautifulSoup(file, 'html.parser')
+    let issue_number = &args[1];
+    let post_title = &args[2];
+    let post_author = &args[3];
+    let post_content = &args[4];
+    let post_created_date = &args[5];
 
-//     main_tag = soup.find('main')
-//     if main_tag:
-//         sections = main_tag.find_all('section')
+    let url = "https://nimafanniasl.github.io/GithubForum/posts/";
 
-//         if len(sections) > 10:
-//             # Remove the oldest section (last one in the list)
-//             sections[-1].decompose()
+    let minified_post_content = format!("{}{}", &post_content[..70], "...");
 
-//     with open(html_file, 'w') as file:
-//         file.write(str(soup))
+    let recent_html = "recent.html";
+    let template_file_path = "templates/section.html";
 
-// def remove_duplicate_posts(html_file, issue_number):
-//     with open(html_file, 'r') as file:
-//         soup = BeautifulSoup(file, 'html.parser')
+    let template_file_str = fs::read_to_string(template_file_path)
+    .expect("Should have been able to read the file :(");
 
-//     main_tag = soup.find('main')
-//     if main_tag:
-//         sections = main_tag.find_all('section')
+    let new_section_html = template_file_str.replace("{POST-TITLE}", &post_title);
+    let new_section_html = new_section_html.replace("{POST-AUTHOR}", &post_author);
+    let new_section_html = new_section_html.replace("{POST-DATE}", &post_created_date);
+    let new_section_html = new_section_html.replace("{POST-NUMBER}", &issue_number);
+    let new_section_html = new_section_html.replace("{MINIFIED-POST-CONTENT}", &minified_post_content);
+    let new_section_html = new_section_html.replace("{POST-PAGE-LINK}", format!("{}{}.html", &url, &issue_number).as_str());
 
-//         for section in sections:
-//             if section.get('id') == str(issue_number):
-//                 section.decompose()
-
-//     with open(html_file, 'w') as file:
-//         file.write(str(soup))
-
-// if __name__ == "__main__":
-//     issue_number = sys.argv[1]
-//     post_title = sys.argv[2]
-//     post_author = sys.argv[3]
-//     post_content = sys.argv[4]
-
-//     post_content = "".join(post_content[:70]) + "..."
-//     print(post_content)
-
-//     recent_html = "recent.html"
-
-//     with open("templates/section.html", "r") as section_template:
-//         new_section_html = section_template.read()
-
-//     new_section_html = new_section_html.replace("{POST-TITLE}", post_title)
-//     new_section_html = new_section_html.replace("{POST-AUTHOR}", post_author)
-//     new_section_html = new_section_html.replace("{POST-DATE}", datetime.now().strftime("%Y-%m-%d"))
-//     new_section_html = new_section_html.replace("{POST-NUMBER}", issue_number)
-//     new_section_html = new_section_html.replace("{MINIFIED-POST-CONTENT}", post_content)
-//     new_section_html = new_section_html.replace("{POST-PAGE-LINK}", f"https://nimafanniasl.github.io/GithubForum/posts/{issue_number}.html")
-
-//     # Remove suplicate post
-//     remove_duplicate_posts(recent_html, issue_number)
-
-//     # Add the new section to the HTML file
-//     add_section_to_html(recent_html, new_section_html)
-
-//     # Remove the oldest section if there are more than 10 sections
-//     remove_oldest_section(recent_html)
+}

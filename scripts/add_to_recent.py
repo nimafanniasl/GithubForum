@@ -6,12 +6,11 @@ def add_section_to_html(html_file, new_section_html):
     with open(html_file, 'r') as file:
         soup = BeautifulSoup(file, 'html.parser')
 
-    main_tag = soup.find('main')
-
-    if main_tag:
+    main_section = soup.find("section", id="recent")
+    if main_section:
         # Create a new section and add it to the top of the main element
         new_section = BeautifulSoup(new_section_html, 'html.parser')
-        main_tag.insert(0, new_section)
+        main_section.insert(0, new_section)
 
     with open(html_file, 'w') as file:
         file.write(str(soup))
@@ -20,9 +19,9 @@ def remove_oldest_section(html_file):
     with open(html_file, 'r') as file:
         soup = BeautifulSoup(file, 'html.parser')
 
-    main_tag = soup.find('main')
-    if main_tag:
-        sections = main_tag.find_all('section')
+    main_section = soup.find("section", id="recent")
+    if main_section:
+        sections = main_section.find_all('section')
 
         if len(sections) > 10:
             # Remove the oldest section (last one in the list)
@@ -35,9 +34,9 @@ def remove_duplicate_posts(html_file, issue_number):
     with open(html_file, 'r') as file:
         soup = BeautifulSoup(file, 'html.parser')
 
-    main_tag = soup.find('main')
-    if main_tag:
-        sections = main_tag.find_all('section')
+    main_section = soup.find("section", id="recent")
+    if main_section:
+        sections = main_section.find_all('section')
 
         for section in sections:
             if section.get('id') == str(issue_number):
@@ -54,9 +53,8 @@ if __name__ == "__main__":
     post_created_date = sys.argv[5]
 
     post_content = "".join(post_content[:70]) + "..."
-    print(post_content)
 
-    recent_html = "recent.html"
+    recent_html = "index.html"
 
     with open("templates/section.html", "r") as section_template:
         new_section_html = section_template.read()

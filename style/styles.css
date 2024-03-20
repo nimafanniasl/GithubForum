@@ -153,7 +153,9 @@ footer {
     color: #fff;
 }
 
-/* Add these styles for the posting page */
+#recent {
+    margin-top: 20px;
+}
 
 /* Style the post form */
 .post-form {
